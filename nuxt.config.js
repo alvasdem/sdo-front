@@ -22,7 +22,13 @@ export default {
 
   buildModules: ["@nuxt/typescript-build"],
 
-  modules: [],
+  modules: ["@nuxtjs/axios"],
+  axios: {
+    proxy: true,
+  },
+  proxy: {
+    "/api/": process.env.BASE_URL,
+  },
 
   build: {},
 };
