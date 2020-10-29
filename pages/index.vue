@@ -13,7 +13,7 @@ div
                 b-col(lg="6")
                   .p-5(class="text-center")
                     h1(class="h4 text-gray-900 mb-4") Добро пожаловать!
-                    b-form(@submit='onSubmit' @reset='onReset' v-if='show')
+                    b-form(@submit='onSubmit' v-if='show')
                       b-form-group#input-group-1(label='Логин:' label-for='input-1' )
                         b-form-input#input-1(v-model='form.email' type='email' required)
                       b-form-group#input-group-2(label='Пароль:' label-for='input-2')
