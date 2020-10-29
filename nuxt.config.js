@@ -9,7 +9,10 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
-  css: [],
+  css: [
+    "bootstrap/dist/css/bootstrap.css",
+    "bootstrap-vue/dist/bootstrap-vue.css",
+  ],
 
   plugins: [
     {
