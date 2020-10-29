@@ -1,6 +1,9 @@
 <template lang="pug">
-
-
+div
+  Header
+  Footer
+        
+        
 </template>
 
 <script lang="ts">

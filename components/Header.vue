@@ -1,6 +1,3 @@
 <template lang="pug">
-div
-  nuxt
-    
-    
+h1 Header
 </template>
