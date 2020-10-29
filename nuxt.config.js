@@ -14,7 +14,6 @@ export default {
     "bootstrap-vue/dist/bootstrap-vue.css",
     "assets/style/main.scss",
   ],
-
   plugins: [
     {
       src: "~plugins/bootstrap.js",
@@ -32,6 +31,13 @@ export default {
   },
   proxy: {
     '/api': 'http://example.com',
+  },
+  env: {
+    // use https on prod, http on local
+    baseUrl:
+      process.env.NODE_ENV == "production"
+        ? "http://localhost"
+        : "https://so.openvuz.org",
   },
 
   build: {

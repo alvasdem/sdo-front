@@ -39,7 +39,7 @@ import Vue from "vue";
 
 export default Vue.extend({
   head: {
-    title: "Главная страница",
+    title: "Вход в личный кабинет",
   },
   data() {
     return {
