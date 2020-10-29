@@ -30,5 +30,16 @@ export default {
     "/api/": process.env.BASE_URL,
   },
 
-  build: {},
+  build: {
+    extend(config, ctx) {
+      if (ctx.dev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: "pre",
+          test: /\.(js|vue|pug)$/,
+          loader: "pug-plain-loader",
+          exclude: /(node_modules)/,
+        });
+      }
+    },
+  },
 };
