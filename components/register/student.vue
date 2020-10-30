@@ -3,11 +3,11 @@
                     form(@submit='onSubmit' )
                       b-form-group#input-group-1(ref="surname" v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-1' )
                         b-form-input#input-1(v-model='form.surname'  v-on:keyup="check" placeholder='Фамилия'   required)
-                        .error-message.none()  weqwew
-                      b-form-group#input-group-3( v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
+                        .error-message.none()  
+                      b-form-group#input-group-3(ref="name" v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
                         b-form-input#input-3(v-model='form.name' placeholder='Имя'  v-on:keyup="check"    required)                                   
                         .error-message.none()                        
-                      b-form-group#input-group-2( v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
+                      b-form-group#input-group-2(ref="otch"  v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
                         b-form-input#input-2(v-model='form.otch' placeholder='Отчество'  v-on:keyup="check"    required)  
                         .error-message.none()
 
@@ -74,52 +74,54 @@ export default Vue.extend({
     };
   },
   methods: {
+
     check(event){
-
-      console.log(this.$refs["surname"])
-
-       if(this.form.surname.length > 1) {
-        //   event.path[2].children[0].children[1].className = "error-message"
-         //  event.path[2].children[0].children[1].innerText = "Поле не может быть пустым"
-        this.$refs['surname'].$el.classList.add('error')
-        this.$refs['surname'].$el.classList.remove('okay')
-        this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
-
-
-       }
-       if(this.form.otch.length < 1) {
-        this.$refs['surname'].$el.classList.add('error')
-        this.$refs['surname'].$el.classList.remove('okay')
-        this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
-
-
-       }       
+      
        const key = event.key.toLowerCase();
         if (key.length !== 1) {
              return;
         }
-       const isLetter = (key >= "a" && key <= "z");
-       const isNumber = (key >= "0" && key <= "9");
+       let isLetter = (key >= "a" && key <= "z");
+       let isNumber = (key >= "0" && key <= "9");
 
-       if (isLetter){
+       if(this.form.surname.length <= 0) {
 
+        this.$refs['surname'].$el.classList.add('error')
+        this.$refs['surname'].$el.classList.remove('okay')
+        this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+
+
+
+       }
+         if (isLetter){
+
+              this.$refs['surname'].$el.classList.add('error')
+              this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
+              this.$refs['surname'].$el.classList.remove('okay')
+
+              this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+
+        } else {
+            if(this.form.surname.length > 0) {
+
+            this.$refs['surname'].$el.classList.remove('error')
+            this.$refs['surname'].$el.classList.add('okay')
+            this.$refs['surname'].$el.children[0].children[1].classList.add('none')
+              this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+
+            }
+           
+        }
+
+        if (isNumber){
+            this.$refs['surname'].$el.classList.remove('okay')
             this.$refs['surname'].$el.classList.add('error')
-            this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
             this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+            this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
 
-       } else {
-           this.$refs['surname'].$el.classList.remove('error')
-           this.$refs['surname'].$el.classList.add('okay')
-           this.$refs['surname'].$el.children[0].children[1].classList.add('none')
-       }
+        }       
 
-       if (isNumber){
-          this.$refs['surname'].$el.classList.remove('okay')
-          this.$refs['surname'].$el.classList.add('error')
-          this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
-          this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
 
-       }
 
 
 
