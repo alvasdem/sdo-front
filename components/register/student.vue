@@ -3,22 +3,29 @@
                     b-form(@submit='onSubmit' )
                       b-form-group#input-group-1(v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-1' )
                         b-form-input#input-1(v-model='form.surname'  v-on:keyup="check" placeholder='Ваша фамилия:'   required)
+                        .error-message.none() 
                       b-form-group#input-group-2( v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
                         b-form-input#input-2(v-model='form.otch' placeholder='Отчество:'  v-on:keyup="check"    required)  
+                        .error-message.none()
                       b-form-group#input-group-3( v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
                         b-form-input#input-3(v-model='form.name' placeholder='Имя:'  v-on:keyup="check"    required)                                   
+                        .error-message.none()
                       b-form-group#input-group-4( v-mask="'##/##/####'"  label-for='input-3' )
-                        b-form-input#input-4(v-model='form.birthday' placeholder='Дата рождения:'  required)                                         
+                        b-form-input#input-4(v-model='form.birthday' v-on:keyup="checkNumb"  placeholder='Дата рождения:'  required)                                         
+                        .error-message.none()          
                       b-form-group#input-group-5( label-for='input-4' )
-                        b-form-input#input-5(v-model='form.phone' placeholder='Контактный телефон:'  v-mask="'+# (###) ###-##-##'"   required)
+                        b-form-input#input-5(v-model='form.phone' v-on:keyup="checkPhone"  placeholder='Контактный телефон:'  v-mask="'+# (###) ###-##-##'"   required)
+                        .error-message.none()                 
                       b-form-group#input-group-6(label-for='input-5')
-                        b-form-input#input-6(v-model='form.email' placeholder='Email:'   type="email"  required)
+                        b-form-input#input-6(v-model='form.email' placeholder='Email:' type="email"  v-on:keyup="checkEmail"    required)
+                        .error-message.none()                                     
                       b-form-group#input-group-7( label-for='input-6')                      
-                        b-form-input#input-7(v-model='form.password' placeholder='Пароль:'  type="password" required )
-                      b-form-group#input-group-8(label-for='input-7')
-                        b-form-input#input-8(v-model='form.password2' placeholder='Повторите пароль:'  type="password" required )
-                      b-form-group#input-group-9(label='Промокод(необязательно)' label-for='input-7')
-                        b-form-input#input-9(v-model='form.promo' type="text" )                      
+                        b-form-input#input-7(v-model='form.password' placeholder='Пароль:' v-on:keyup="checkPassword"   type="password" required )
+                        .error-message.none()                                          
+                      b-form-group#input-group-8(label-for='input-8')
+                        b-form-input#input-8(v-model='form.password2' placeholder='Повторите пароль:' v-on:keyup="checkPassword"   type="password" required )                   
+                        .error-message.none()  
+                      br                                   
                       b-form-checkbox-group#checkboxes-4(v-model='form.checked')
                         b-form-checkbox(value='agree') Согласен(на) участвовать в конкурсе на поступление  
                       br                     
@@ -43,17 +50,34 @@ export default Vue.extend({
   },
   data() {
     return {
+      keyup: "",
       form: {
+        surname: "",
+        name: "",
         email: "",
         password: "",
+        password2: "",        
         otch: "",
         checked: ["agree"],
       },
       show: true,
+      x:false,
     };
   },
   methods: {
     check(event){
+        let space = this.form.surname.trim().length == 0;
+
+       if(this.form.surname.length > 1) {
+           event.path[2].children[0].children[1].className = "error-message"
+           event.path[2].children[0].children[1].innerText = "Поле не может быть пустым"
+           event.path[2].className = "form-group error"
+       }
+       if(this.form.otch.length < 1) {
+           event.path[2].children[0].children[1].className = "error-message"
+           event.path[2].children[0].children[1].innerText = "Поле не может быть пустым"
+           event.path[2].className = "form-group error"
+       }       
        const key = event.key.toLowerCase();
         if (key.length !== 1) {
              return;
@@ -62,13 +86,118 @@ export default Vue.extend({
        const isNumber = (key >= "0" && key <= "9");
 
        if (isLetter){
-           alert("Введите пожалуйста ваши данные на русском языке")
+           event.path[2].children[0].children[1].className = "error-message"
+           event.path[2].children[0].children[1].innerText = "Заполните данные на русском языке"
+           event.path[2].className = "form-group error"
+       } else {
+           event.path[2].className = "form-group okay"
+           event.path[2].children[0].children[1].className = "error-message none"
        }
 
        if (isNumber){
-           alert("Введите пожалуйста ваши данные без цифр")
+           event.path[2].children[0].children[1].className = "error-message"
+           event.path[2].children[0].children[1].innerText = "Заполните данные без цифр"
+           
+           event.path[2].className = "form-group error"
        }
     },
+    checkNumb(event){
+       const key = event.key;
+        if (key.length !== 1) {
+             return;
+        }
+       const isNumb = (key >= "а" && key <= "я" || key >= "a" && key <="z");
+       if (isNumb){
+           event.path[2].children[0].children[1].className = "error-message"
+           event.path[2].children[0].children[1].innerText = "Дата рождения выглядит так дд.мм.гг"
+
+           event.path[2].className = "form-group error"
+           //console.log(event.target.className = "form-control error")
+           //alert("Введите пожалуйста ваши данные на русском языке")
+       } else {
+           event.path[2].className = "form-group okay"
+           event.path[2].children[0].children[1].className = "error-message none"
+
+       }
+
+    },
+    checkPhone(event){
+       const key = event.key;
+        if (key.length !== 1) {
+             return;
+        }
+        console.log(key)
+       const isNumb = (key >= "а" && key <= "я" || key >= "a" && key <="z");
+       if (isNumb){
+           console.log(event)
+           event.path[2].children[0].children[1].className = "error-message"
+           event.path[2].children[0].children[1].innerText = "Номер телефона выглядит так + 7 (000) 000-00-00"
+
+           event.path[2].className = "form-group error"
+           //console.log(event.target.className = "form-control error")
+           //alert("Введите пожалуйста ваши данные на русском языке")
+       } else {
+           event.path[2].className = "form-group okay"
+           event.path[2].children[0].children[1].className = "error-message none"
+
+       }
+
+    },    
+    checkEmail(event){
+       const key = event.key;
+        if (key.length !== 1) {
+             return;
+        }
+
+       const isRus = (key >= "а" && key <= "я");
+       if (isRus){
+           console.log(event)
+           event.path[2].children[0].children[1].className = "error-message"
+           event.path[2].children[0].children[1].innerText = "пример example@openvuz.org"
+
+           event.path[2].className = "form-group error"
+           //console.log(event.target.className = "form-control error")
+           //alert("Введите пожалуйста ваши данные на русском языке")
+       } else {
+            var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.form.email);
+                       event.path[2].children[0].children[1].className = "error-message"
+                       event.path[2].children[0].children[1].innerText = "пример example@openvuz.org"
+                       event.path[2].className = "form-group error"
+
+            if (re) {
+                
+                event.path[2].className = "form-group okay"
+                event.path[2].children[0].children[1].className = "error-message none"
+                return false;
+            }
+
+       }
+
+    },      
+   checkPassword(event){
+
+        if (this.form.password.length < 6) {
+        event.path[2].children[0].children[1].className = "error-message"
+        event.path[2].children[0].children[1].innerText = "Пароль должен содержать больше 6 знаков"
+        event.path[2].className = "form-group error"
+        } 
+        if (this.form.password.length > 6) {
+        event.path[2].className = "form-group okay"
+        event.path[2].children[0].children[1].className = "error-message none"
+        } 
+        if (this.form.password2.length < 6) {
+        event.path[2].children[0].children[1].className = "error-message"
+        event.path[2].children[0].children[1].innerText = "Пароль должен содержать больше 6 знаков"
+        event.path[2].className = "form-group error"
+        } 
+        if (this.form.password2.length > 6) {
+        event.path[2].className = "form-group okay"
+        event.path[2].children[0].children[1].className = "error-message none"
+        }         
+               
+       
+
+    },        
     onSubmit(evt) {
       evt.preventDefault();
       alert(JSON.stringify(this.form));
