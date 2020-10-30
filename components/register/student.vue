@@ -1,9 +1,9 @@
 <template lang="pug">
                 .p-1(class="text-center")
                     form(@submit='onSubmit' )
-                      b-form-group#input-group-1(v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-1' )
+                      b-form-group#input-group-1(ref="surname" v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-1' )
                         b-form-input#input-1(v-model='form.surname'  v-on:keyup="check" placeholder='Фамилия'   required)
-                        .error-message.none() 
+                        .error-message.none()  weqwew
                       b-form-group#input-group-3( v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
                         b-form-input#input-3(v-model='form.name' placeholder='Имя'  v-on:keyup="check"    required)                                   
                         .error-message.none()                        
@@ -76,15 +76,23 @@ export default Vue.extend({
   methods: {
     check(event){
 
+      console.log(this.$refs["surname"])
+
        if(this.form.surname.length > 1) {
-           event.path[2].children[0].children[1].className = "error-message"
-           event.path[2].children[0].children[1].innerText = "Поле не может быть пустым"
-           event.path[2].className = "form-group error"
+        //   event.path[2].children[0].children[1].className = "error-message"
+         //  event.path[2].children[0].children[1].innerText = "Поле не может быть пустым"
+        this.$refs['surname'].$el.classList.add('error')
+        this.$refs['surname'].$el.classList.remove('okay')
+        this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+
+
        }
        if(this.form.otch.length < 1) {
-           event.path[2].children[0].children[1].className = "error-message"
-           event.path[2].children[0].children[1].innerText = "Поле не может быть пустым"
-           event.path[2].className = "form-group error"
+        this.$refs['surname'].$el.classList.add('error')
+        this.$refs['surname'].$el.classList.remove('okay')
+        this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+
+
        }       
        const key = event.key.toLowerCase();
         if (key.length !== 1) {
@@ -94,20 +102,27 @@ export default Vue.extend({
        const isNumber = (key >= "0" && key <= "9");
 
        if (isLetter){
-           event.path[2].children[0].children[1].className = "error-message"
-           event.path[2].children[0].children[1].innerText = "Заполните данные на русском языке"
-           event.path[2].className = "form-group error"
+
+            this.$refs['surname'].$el.classList.add('error')
+            this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
+            this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+
        } else {
-           event.path[2].className = "form-group okay"
-           event.path[2].children[0].children[1].className = "error-message none"
+           this.$refs['surname'].$el.classList.remove('error')
+           this.$refs['surname'].$el.classList.add('okay')
+           this.$refs['surname'].$el.children[0].children[1].classList.add('none')
        }
 
        if (isNumber){
-           event.path[2].children[0].children[1].className = "error-message"
-           event.path[2].children[0].children[1].innerText = "Заполните данные без цифр"
-           
-           event.path[2].className = "form-group error"
+          this.$refs['surname'].$el.classList.remove('okay')
+          this.$refs['surname'].$el.classList.add('error')
+          this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+          this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
+
        }
+
+
+
     },
     checkNumb(event){
        const key = event.key;

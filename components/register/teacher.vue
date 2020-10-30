@@ -2,7 +2,7 @@
                 .p-1(class="text-center")
                     b-form(@submit='onSubmit' )
                       b-form-group#input-group-1(v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-1' )
-                        b-form-input#input-1(v-model='form.surname'  v-on:keyup="check"  placeholder='Фамилия'   required)
+                        b-form-input#input-1(v-model='form.surname'  v-on:keyup="check(item)"  placeholder='Фамилия'   required)
                         .error-message.none() 
      
                       b-form-group#input-group-2( v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
