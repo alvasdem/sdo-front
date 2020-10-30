@@ -19,6 +19,10 @@ export default {
       src: "~plugins/bootstrap.js",
       ssr: true,
     },
+    {
+      src: "~plugins/vue-mask.js",
+      ssr: true,
+    },
   ],
 
   components: true,

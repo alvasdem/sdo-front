@@ -27,6 +27,7 @@ div
                       br
                       nuxt-link(to='/register') Создать аккаунт
 
+  
                     //b-card.mt-3(header='Данные с формы')
                       pre.m-0 {{ form }}
 
