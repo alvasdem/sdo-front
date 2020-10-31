@@ -3,9 +3,9 @@ div
   Header
 
   .layout.p-4
-    b-container
+    b-container(fluid)
       b-row
-        b-col(lg="12" md="9" xl="10")
+        b-col(lg="12" md="9" xl="10" style="margin:0 auto;")
           b-card.o-hidden.border-0.shadow-lg.my-5
             .card-body.p-0
               b-row
