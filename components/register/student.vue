@@ -49,14 +49,16 @@
                       b-form-group#input-group-8(ref="pw2"  label-for='input-8')
                         b-form-input#input-8(v-model='form.password2' placeholder='Повторите пароль:' v-on:keyup="checkPassword2"  :disabled="disabled"   type="password" required )                   
                         .error-message.none()  
-                      br                                   
-                      b-form-checkbox-group#checkboxes-4(v-model='form.checked')
-                        b-form-checkbox(value='agree') Согласен(на) участвовать в конкурсе на поступление  
-                      br                     
-                      span Нажав кнопку Регистрация вы даёте свое согласие на обработку персональных данных
+                  
+                      b-alert(variant='success' show)
+                        b-form-checkbox-group#checkboxes-4(v-model='form.checked')
+                          b-form-checkbox(value='agree') Согласен(на) участвовать в конкурсе на поступление  
+                        br                                
+              
+                      span.small.text-secondary Нажав кнопку Регистрация вы даёте свое согласие на обработку персональных данных
                       br
                       br
-                      b-button(type='submit' variant='warning' :disabled="disabled" ) Регистрация
+                      b-button(size="lg" type='submit' variant='warning' :disabled="disabled" ) Регистрация
                       hr
                       nuxt-link(to='/login') Уже зарегистрированы? Войдите!
                       br

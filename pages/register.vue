@@ -3,14 +3,12 @@ div
   Header
 
   .layout.p-4
-    b-container(fluid)
-      b-row
-        b-col(lg="12" md="9" xl="10" style="margin:0 auto;")
-          b-card.o-hidden.border-0.shadow-lg.my-5
-            .card-body.p-0
+    b-container()
+
+            .card-body.o-hidden.border-0.shadow-lg.my-5.p-0
               b-row
                 b-col.d-none.d-lg-block.bg-login-image(lg="6")
-                b-col(lg="6")
+                b-col.p-5(lg="6")
                   h1(class="h4 text-gray-900 mb-4") Регистрация
 
                   b-form-group#input-group-0(label='Зарегистрироваться как:' label-for='input-0')
