@@ -3,8 +3,7 @@
                     b-form(@submit='onSubmit' )
                       b-form-group#input-group-1(v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-1' )
                         b-form-input#input-1(v-model='form.surname'  v-on:keyup="check(item)"  placeholder='Фамилия'   required)
-                        .error-message.none() 
-     
+                        .error-message.none()   
                       b-form-group#input-group-2( v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
                         b-form-input#input-2(v-model='form.name' v-on:keyup="check"  placeholder='Имя'   required)           
                         .error-message.none()                      
@@ -112,8 +111,7 @@ export default Vue.extend({
            event.path[2].children[0].children[1].innerText = "Дата рождения выглядит так дд.мм.гг"
 
            event.path[2].className = "form-group error"
-           //console.log(event.target.className = "form-control error")
-           //alert("Введите пожалуйста ваши данные на русском языке")
+
        } else {
 
            var re = /^([0-2^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/.test(this.form.birthday);

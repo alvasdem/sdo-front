@@ -241,10 +241,6 @@ export default Vue.extend({
     },       
     checkNumb(event){
        const key = event.key;
-        if (key.length !== 1) {
-             return;
-        }
-        
        const isNumb = (key >= "а" && key <= "я" || key >= "a" && key <="z");
        if (isNumb){
            this.$refs['birthday'].$el.classList.add('error')
@@ -273,18 +269,18 @@ export default Vue.extend({
 
     },
     checkPhone(event){
-       if(this.form.phone.length > 1) {
 
+
+       if(this.form.phone.length > 0) {
+        
+         
            this.$refs['phone'].$el.classList.add('error')
-           this.$refs['phone'].$el.children[0].children[1].innerText = " Пожалуйста, введите Ваш телефон"
+           this.$refs['phone'].$el.children[0].children[1].innerText = " Пожалуйста, введите Ваш телефон122"
            this.$refs['phone'].$el.children[0].children[1].classList.remove('none')
-                                 this.phoneA = false;
+           this.phoneA = false;
 
        }      
        const key = event.key;
-        if (key.length !== 1) {
-             return;
-        }
         //console.log(key)
        const isNumb = (key >= "а" && key <= "я" || key >= "a" && key <="z");
        if (isNumb){
@@ -323,9 +319,6 @@ export default Vue.extend({
        }
              
        const key = event.key;
-        if (key.length !== 1) {
-             return;
-        }
 
        const isRus = (key >= "а" && key <= "я");
        if (isRus){
