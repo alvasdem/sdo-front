@@ -34,7 +34,7 @@
                         br         
                         b-button(v-if="emailA" variant='primary' @click="aproveEmail") Подтвердить email    
                       b-form-group#input-group-10(ref="emailC" v-if="emailCheck"   label-for='input-10' )
-                        b-form-input#input-10(v-model='form.emailCode' v-on:keyup="checkEmailCode"  placeholder='Код подтверждения'  :disabled="disabledCodeE"   v-mask="'####'"   required)
+                        b-form-input#input-10(v-model='form.emailCode' v-oаn:keyup="checkEmailCode"  placeholder='Код подтверждения'  :disabled="disabledCodeE"   v-mask="'####'"   required)
                         .error-message.none()    
                         br                        
                         b-button( variant='primary' v-if="aproveE" @click="sendAproveE") Подтвердить  
@@ -50,9 +50,9 @@
                         b-form-input#input-8(v-model='form.password2' placeholder='Повторите пароль:' v-on:keyup="checkPassword2"  :disabled="disabled"   type="password" required )                   
                         .error-message.none()  
                   
-                      b-alert(variant='success' show)
+                      b-alert(ref="alert" variant='success' show)
                         b-form-checkbox-group#checkboxes-4(v-model='form.checked')
-                          b-form-checkbox(value='agree') Согласен(на) участвовать в конкурсе на поступление  
+                          b-form-checkbox(v-model='agree ' @change="checked($event)"   value="agree"    unchecked-value="not_accepted") Согласен(на) участвовать в конкурсе на поступление  
                         br                                
               
                       span.small.text-secondary Нажав кнопку Регистрация вы даёте свое согласие на обработку персональных данных
@@ -80,9 +80,11 @@ export default Vue.extend({
       disabled: true,
       aprove: true,
       phoneCode:true,
+      red:false,
       active: false,
       disabledCode: false,
       uspehEmail: false,
+      agree: "agree",
       disabledCodeE: false,
       phoneA: false,
       eA: true,
@@ -106,6 +108,22 @@ export default Vue.extend({
     };
   },
   methods: {
+    checked: function(e) {
+
+      if(this.agree.length > 0){
+        this.$refs['alert'].$el.classList.remove('alert-success')
+        this.$refs['alert'].$el.classList.add('alert-danger')
+      } else {
+        this.$refs['alert'].$el.classList.add('alert-success')
+        this.$refs['alert'].$el.classList.remove('alert-danger')
+      }
+
+
+ 
+ 
+
+
+    },
     sendAproveE(){
 
 
