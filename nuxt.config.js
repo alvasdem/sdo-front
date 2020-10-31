@@ -55,5 +55,9 @@ export default {
         });
       }
     },
+
+    extractCSS: true,
+    cssSourceMap: true,
+
   },
 };
