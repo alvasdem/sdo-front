@@ -3,7 +3,7 @@
                     form(@submit='onSubmit' )
                       b-form-group#input-group-1(ref="surname" v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-1' )
                         b-form-input#input-1(v-model='form.surname'  v-on:keyup="check" placeholder='Фамилия'   required)
-                        .error-message.none()  
+                        .error-message.none()   3
                       b-form-group#input-group-3(ref="name" v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-2' )
                         b-form-input#input-3(v-model='form.name' placeholder='Имя'  v-on:keyup="check"    required)                                   
                         .error-message.none()                        
@@ -76,11 +76,9 @@ export default Vue.extend({
   methods: {
 
     check(event){
-      
-       const key = event.key.toLowerCase();
-        if (key.length !== 1) {
-             return;
-        }
+       this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
+       this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+       const key = event.key;
        let isLetter = (key >= "a" && key <= "z");
        let isNumber = (key >= "0" && key <= "9");
 
@@ -98,7 +96,7 @@ export default Vue.extend({
               this.$refs['surname'].$el.classList.add('error')
               this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
               this.$refs['surname'].$el.classList.remove('okay')
-
+              console.log(this.$refs['surname'])
               this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
 
         } else {

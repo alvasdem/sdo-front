@@ -1,4 +1,7 @@
 export default {
+  server: {
+    host: "192.168.0.104"
+  },
   head: {
     title: "sdo",
     meta: [
