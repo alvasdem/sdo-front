@@ -12,9 +12,9 @@ b-container.header(fluid)
             b-navbar-nav(style="flex-direction:row !important ; float:right;")
              ui.nav
                 li
-                 nuxt-link(to='/login' style="color:#fff !important") Войти
+                 nuxt-link.small(to='/login' style="color:#fff !important") Войти
                 li
-                 nuxt-link(to='/register' style="color:#fff !important") Регистрация
+                 nuxt-link.small(to='/register' style="color:#fff !important") Регистрация
 
    
 </template>
