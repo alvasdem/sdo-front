@@ -1,6 +1,6 @@
 <template lang="pug">
                 .p-1(class="text-center")
-                    form(@submit='onSubmit' )
+                    form(@submit='onSubmit')
                       b-form-group#input-group-1(ref="surname" v-mask="'AAAAAAAAAAAAAAAAAAA'" label-for='input-1' )
                         b-form-input#input-1(v-model='form.surname'  v-on:keyup="check" placeholder='Фамилия'   required)
                         .error-message.none()   
@@ -20,7 +20,7 @@
                         br   
                         b-button(v-if="phoneA" variant='primary' @click="phoneForm") Подтвердить телефон    
 
-                      b-form-group#input-group-9(ref="sms" v-if="codeCheck"  label-for='input-9' )
+                      b-form-group#input-group-9.error(ref="sms" v-if="codeCheck"  label-for='input-9' )
                         b-form-input#input-9(v-model='form.phoneCode' v-on:keyup="checkPhoneCode"  placeholder='Код подтверждения'  :disabled="disabledCode"   v-mask="'####'"   required)
                         .error-message.none()    
                         br                        
@@ -28,13 +28,14 @@
                         span(v-if="uspeh") Спасибо, телефон подтвержден.  
 
 
-                      b-form-group#input-group-6(label-for='input-5')
-                        b-form-input#input-6(ref="email" v-if="eA"  v-model='form.email' placeholder='Email' type="email"  v-on:keyup="checkEmail"    required)
+                      b-form-group#input-group-6(ref="email"  label-for='input-5')
+                        b-form-input#input-6(v-if="eA"  v-model='form.email' placeholder='Email' type="email"  v-on:keyup="checkEmail"    required)
                         .error-message.none()
                         br         
                         b-button(v-if="emailA" variant='primary' @click="aproveEmail") Подтвердить email    
-                      b-form-group#input-group-10(ref="emailC" v-if="emailCheck"   label-for='input-10' )
-                        b-form-input#input-10(v-model='form.emailCode' v-oаn:keyup="checkEmailCode"  placeholder='Код подтверждения'  :disabled="disabledCodeE"   v-mask="'####'"   required)
+                        
+                      b-form-group#input-group-10.error(ref="emailC" v-if="emailCheck"   label-for='input-10' )
+                        b-form-input#input-10(v-model='form.emailCode' v-on:keyup="checkEmailCode"  placeholder='Код подтверждения'  :disabled="disabledCodeE"   v-mask="'####'"   required)
                         .error-message.none()    
                         br                        
                         b-button( variant='primary' v-if="aproveE" @click="sendAproveE") Подтвердить  
@@ -50,7 +51,7 @@
                         b-form-input#input-8(v-model='form.password2' placeholder='Повторите пароль:' v-on:keyup="checkPassword2"  :disabled="disabled"   type="password" required )                   
                         .error-message.none()  
                   
-                      //b-alert(ref="alert" variant='success' show)
+                      b-alert(v-if="teacher" ref="alert" variant='success' show)
                         b-form-checkbox-group#checkboxes-4(v-model='form.checked')
                           b-form-checkbox(v-model='agree ' @change="checked($event)"   value="agree"    unchecked-value="not_accepted") Согласен(на) участвовать в конкурсе на поступление  
                         br                                
@@ -58,7 +59,7 @@
                       span.small.text-secondary Нажав кнопку Регистрация вы даёте свое согласие на обработку персональных данных
                       br
                       br
-                      b-button(size="lg" type='submit' variant='warning' :disabled="disabled" ) Регистрация
+                      b-button( @click="register" size="lg" type='submit' variant='warning' :disabled="disabled" ) Регистрация
                       hr
                       nuxt-link(to='/login') Уже зарегистрированы? Войдите!
                       br
@@ -85,6 +86,8 @@ export default Vue.extend({
       disabledCode: false,
       uspehEmail: false,
       agree: "agree",
+      code:false,
+      codeEmail: false,
       disabledCodeE: false,
       phoneA: false,
       eA: true,
@@ -108,34 +111,100 @@ export default Vue.extend({
     };
   },
   methods: {
+    register: function(){
+
+      if(this.form.surname.length <= 0){
+        this.$refs['surname'].$el.classList.add('error')
+        this.$refs['surname'].$el.classList.remove('okay')
+        this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
+        this.$refs['surname'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+      }
+
+      if(this.form.name.length <= 0){
+        this.$refs['name'].$el.classList.add('error')
+        this.$refs['name'].$el.classList.remove('okay')
+        this.$refs['name'].$el.children[0].children[1].classList.remove('none')
+        this.$refs['name'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+      }
+      if(this.form.otch.length <= 0){
+        this.$refs['otch'].$el.classList.add('error')
+        this.$refs['otch'].$el.classList.remove('okay')
+        this.$refs['otch'].$el.children[0].children[1].classList.remove('none')
+        this.$refs['otch'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+      } 
+      if(this.form.birthday.length <= 0){
+        this.$refs['birthday'].$el.classList.add('error')
+        this.$refs['birthday'].$el.classList.remove('okay')
+        this.$refs['birthday'].$el.children[0].children[1].classList.remove('none')
+        this.$refs['birthday'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+      }
+      if(this.form.email.length <= 0){
+        this.$refs['email'].$el.classList.add('error')
+        this.$refs['email'].$el.classList.remove('okay')
+        this.$refs['email'].$el.children[0].children[1].classList.remove('none')
+        this.$refs['email'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+      }
+      if(this.form.phone.length <= 0){
+        this.$refs['phone'].$el.classList.add('error')
+        this.$refs['phone'].$el.classList.remove('okay')
+        this.$refs['phone'].$el.children[0].children[1].classList.remove('none')
+        this.$refs['phone'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+      }
+      if(this.form.password.length <= 0){
+        this.$refs['pw1'].$el.classList.add('error')
+        this.$refs['pw1'].$el.classList.remove('okay')
+        this.$refs['pw1'].$el.children[0].children[1].classList.remove('none')
+        this.$refs['pw1'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+      }      
+      if(this.form.password2.length <= 0){
+        this.$refs['pw2'].$el.classList.add('error')
+        this.$refs['pw2'].$el.classList.remove('okay')
+        this.$refs['pw2'].$el.children[0].children[1].classList.remove('none')
+        this.$refs['pw2'].$el.children[0].children[1].innerText = "Пожалуйста заполните поле"
+      }
+    },
     checked: function(e) {
 
       if(this.agree.length > 0){
         this.$refs['alert'].$el.classList.remove('alert-success')
-        this.$refs['alert'].$el.classList.add('alert-danger')
+        this.$refs['alert'].$el.classList.add('alert-danger'
+        )
+        if(this.code == false || this.codeEmail == false || this.code == true || this.codeEmail == true) {
+        this.disabled = true;
+        }
+
       } else {
+
+        if(this.code == true){
+          this.disabled = false;
+
+        }
+        if(this.codeEmail == true){
+          this.disabled = false;
+
+        }
         this.$refs['alert'].$el.classList.add('alert-success')
         this.$refs['alert'].$el.classList.remove('alert-danger')
+
       }
-
-
- 
- 
-
-
     },
     sendAproveE(){
+
+      if(this.codeEmail == true && this.form.emailCode.length >= 4){
 
 
       this.disabledCodeE = true;
       this.uspehEmail = true;
       this.aproveE = false;
       this.active = false;
+      this.$refs['emailC'].$el.classList.remove('okay')
       this.disabled = false;
+
+      }      
+
 
     },
     aproveEmail(){
-
       this.eA = false;
       this.emailA = false;
       this.emailCheck = true;
@@ -144,13 +213,18 @@ export default Vue.extend({
     },
     sendAprove() { 
 
-      //alert("OK!")
+      if(this.code == true && this.form.phoneCode.length >= 4){
+
+
       this.disabledCode = true;
       this.aprove = false;
       this.uspeh = true;
       this.$refs['sms'].$el.classList.remove('okay')
       this.active = false;
       this.disabled = false;
+
+        
+      }
 
     },
     phoneForm(){
@@ -160,11 +234,63 @@ export default Vue.extend({
 
     },
 
-    checkPhoneCode() {
+    checkPhoneCode(event) {
+       const key = event.key;
+       const isNumb = (key >= "а" && key <= "я" || key >= "a" && key <="z");
+       if (isNumb){
+           this.$refs['sms'].$el.classList.add('error')
+           this.$refs['sms'].$el.children[0].children[1].innerText = "Пожалуйста, заполните поле"
+           this.$refs['sms'].$el.children[0].children[1].classList.remove('none')
+       } else {
 
+           let code = false;
+           if(this.form.phoneCode.length == 4){
+             code = true
+           }
+           var re = code;
+           this.$refs['sms'].$el.classList.add('error')
+           this.$refs['sms'].$el.children[0].children[1].innerText = "Пожалуйста, заполните поле"
+           this.$refs['sms'].$el.children[0].children[1].classList.remove('none')
+            if (re == true) {
+                
+            this.$refs['sms'].$el.classList.remove('error')
+            this.$refs['sms'].$el.classList.add('okay')
+            this.$refs['sms'].$el.children[0].children[1].classList.add('none')
+            this.code = true;
+                return false;
+            }
+
+
+       }
     },
-    checkEmailCode(){
+    checkEmailCode(event){
+       const key = event.key;
+       const isNumb = (key >= "а" && key <= "я" || key >= "a" && key <="z");
+       if (isNumb){
+           this.$refs['emailC'].$el.classList.add('error')
+           this.$refs['emailC'].$el.children[0].children[1].innerText = "Пожалуйста, заполните поле"
+           this.$refs['emailC'].$el.children[0].children[1].classList.remove('none')
+       } else {
 
+           let code = false;
+           if(this.form.emailCode.length == 4){
+             code = true
+           }
+           var re = code;
+           this.$refs['emailC'].$el.classList.add('error')
+           this.$refs['emailC'].$el.children[0].children[1].innerText = "Пожалуйста, заполните поле"
+           this.$refs['emailC'].$el.children[0].children[1].classList.remove('none')
+            if (re == true) {
+                
+            this.$refs['emailC'].$el.classList.remove('error')
+            this.$refs['emailC'].$el.classList.add('okay')
+            this.$refs['emailC'].$el.children[0].children[1].classList.add('none')
+            this.codeEmail = true;
+                return false;
+            }
+
+
+       }
     },
     check(event){
        this.$refs['surname'].$el.children[0].children[1].classList.remove('none')
@@ -333,9 +459,9 @@ export default Vue.extend({
     checkEmail(event){
 
        if(this.form.email.length > 1) {
-           event.path[2].children[0].children[1].className = "error-message"
-           event.path[2].children[0].children[1].innerText = "Поле не может быть пустым"
-           event.path[2].className = "form-group error"
+          this.$refs['email'].$el.classList.add('error')
+          this.$refs['email'].$el.children[0].children[1].innerText = " Пожалуйста, введите Ваш email"
+          this.$refs['email'].$el.children[0].children[1].classList.remove('none')
        }
              
        const key = event.key;
@@ -343,17 +469,16 @@ export default Vue.extend({
        const isRus = (key >= "а" && key <= "я");
        if (isRus){
            this.emailA = false;
-           event.path[2].children[0].children[1].className = "error-message"
-           event.path[2].children[0].children[1].innerText = "Пожалуйста, введите Ваш email"
-
-           event.path[2].className = "form-group error"
+          this.$refs['email'].$el.classList.add('error')
+          this.$refs['email'].$el.children[0].children[1].innerText = " Пожалуйста, введите Ваш email"
+          this.$refs['email'].$el.children[0].children[1].classList.remove('none')
            //console.log(event.target.className = "form-control error")
            //alert("Введите пожалуйста ваши данные на русском языке")
        } else {
             var re = /([A-Z0-9a-z_-][^@])+?@[^$#<>?]+?\.[\w]{2,4}/.test(this.form.email);
-                       event.path[2].children[0].children[1].className = "error-message"
-                       event.path[2].children[0].children[1].innerText = "Пожалуйста, введите Ваш email"
-                       event.path[2].className = "form-group error"
+          this.$refs['email'].$el.classList.add('error')
+          this.$refs['email'].$el.children[0].children[1].innerText = " Пожалуйста, введите Ваш email"
+          this.$refs['email'].$el.children[0].children[1].classList.remove('none')
                        this.emailA = false;
 
             if (re) {
@@ -365,8 +490,9 @@ export default Vue.extend({
                   this.active = true;
                 }
  
-                event.path[2].className = "form-group okay"
-                event.path[2].children[0].children[1].className = "error-message none"
+                this.$refs['email'].$el.classList.remove('error')
+                this.$refs['email'].$el.classList.add('okay')
+                this.$refs['email'].$el.children[0].children[1].classList.add('none')
                 return false;
             }
 
@@ -374,6 +500,7 @@ export default Vue.extend({
 
     },      
    checkPassword(event){
+
 
         if (this.form.password.length < 5) {
            this.$refs['pw1'].$el.classList.add('error')
@@ -387,18 +514,22 @@ export default Vue.extend({
         }      
       
     },        
-   checkPassword2(event){
+   checkPassword2: function(event){
 
-        if (this.form.password2.length < 5) {
-           this.$refs['pw2'].$el.classList.add('error')
-           this.$refs['pw2'].$el.children[0].children[1].innerText = "Пароль должен быть не менее 6 символов"
-           this.$refs['pw2'].$el.children[0].children[1].classList.remove('none')
-        } 
-        if (this.form.password2.length > 5) {
-                this.$refs['pw2'].$el.classList.remove('error')
+     console.log(this.form.password)
+        if (this.form.password === this.form.password2) {
+
+                  this.$refs['pw2'].$el.classList.remove('error')
                 this.$refs['pw2'].$el.classList.add('okay')
                 this.$refs['pw2'].$el.children[0].children[1].classList.add('none')
-        }      
+  
+        } else {
+
+
+                   this.$refs['pw2'].$el.classList.add('error')
+           this.$refs['pw2'].$el.children[0].children[1].innerText = "Пароль не совпадает"
+           this.$refs['pw2'].$el.children[0].children[1].classList.remove('none')
+        }
       
     },       
     onSubmit(evt) {
