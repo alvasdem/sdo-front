@@ -1,7 +1,29 @@
 a {
   color: #383f62 !important;
 }
+.btn-warning {
+  background: #e0bf69 !important;
+  border-color: #e0bf69 !important;
+  color: #383f62 !important;
+}
+.btn-primary {
+  color: #fff !important;
+  background-color: #383f62 !important;
+  border-color: #383f62 !important;
+}
 
+.nav {
+  list-style-type: none;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav li {
+  display: inline-block;
+  padding-top: 5px;
+  padding-right: 10px;
+}
 .none {
   opacity: 0;
   -webkit-transition: all 0.2s;

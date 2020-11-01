@@ -4,10 +4,8 @@ div
 
   .layout.p-4
     b-container
-      b-row
-        b-col(lg="12" md="9" xl="10")
-          b-card.o-hidden.border-0.shadow-lg.my-5
-            .card-body.p-0
+            .card-body.o-hidden.border-0.shadow-lg.my-5.p-0
+
               b-row
                 b-col(lg="12")
                   .p-5(class="text-center")
@@ -15,8 +13,9 @@ div
                     b-form(@submit='onSubmit' v-if='show')
                       b-form-group#input-group-1(label='Ваше логин:' label-for='input-1' )
                         b-form-input#input-1(v-model='form.email' type='email' required)
+                      b-button(  size="lg" type='submit' variant='warning' ) Восстановить
      
-                      b-button(type='submit' variant='primary') Восстановить
+
                       hr
                       nuxt-link(to='/login') Уже зарегистрированы? Войдите!
                       br

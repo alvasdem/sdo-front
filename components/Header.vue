@@ -10,10 +10,11 @@ b-container.header(fluid)
                 |  Институт
         b-col.fr(cols="6")
             b-navbar-nav(style="flex-direction:row !important ; float:right;")
-                b-nav-item
-                    nuxt-link(to='/login' style="color:#fff !important") Войти
-                b-nav-item 
-                    nuxt-link(to='/register' style="color:#fff !important") Регистрация
+             ui.nav
+                li
+                 nuxt-link(to='/login' style="color:#fff !important") Войти
+                li
+                 nuxt-link(to='/register' style="color:#fff !important") Регистрация
 
    
 </template>

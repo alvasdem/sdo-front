@@ -4,7 +4,6 @@ div
 
   .layout.p-4
     b-container()
-
             .card-body.o-hidden.border-0.shadow-lg.my-5.p-0
               b-row
                 b-col.d-none.d-lg-block.bg-login-image(lg="6")
