@@ -11,8 +11,8 @@ div
                   .p-5(class="text-center")
                     h1(class="h4 text-gray-900 mb-4") Восстановление доступа
                     b-form(@submit='onSubmit' v-if='show')
-                      b-form-group#input-group-1(label='Ваше логин:' label-for='input-1' )
-                        b-form-input#input-1(v-model='form.email' type='email' required)
+                      b-form-group#input-group-1( label-for='input-1' )
+                        b-form-input#input-1(placeholder="Ваш email" v-model='form.email' type='email' required)
                       b-button(  size="lg" type='submit' variant='warning' ) Восстановить
      
 
